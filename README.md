@@ -14,5 +14,23 @@ After having merged the two sets, we had to get rid of the unnecessary informati
 
 Comming to the ratios. Stock ratios get very different values, one ranging from 0 to 1 and others, as "days of inventory outsatnding" could be from 0 to 365, as we are talking about days. So, to normalize the ratios I used mean and variance normalization. Those ratios are now ready to become the input layers.
 
-## Gradient Descent
+## Gradient Descent (Adam Optimization Algorithm)
+The Adam combines two gradient descent tehniques, the Route Mean Square Prop (RMS) with the Momentum.
+
+It basically calculates exponential weighted average of past gradients and stores it in a variable _v_, which then will be corrected from bias.
+Sdw = _Beta*Sdw + (1-Beta)*dw^2_
+Sdb = _Beta*Sdb + (1-Beta)*db^2_
+
+w = _w - alpha*dw/(sqrt(Sdw)+e)_
+b = _b - alpha*db/(sqrt(Sdb)+e)_
+
+where e is for numerical stability 10^-8
+
+
+
 Since the dataset is not large enough to implement stochastic gradient descent (or minibatch GD), Adam optimization algorithm was chosen.
+
+
+
+## Learning Rate Decay
+When talking about this hyperparameter, a fixed number muight struggle to converge, staying in a wide oscilation tha returns low accuracy. The idea is to adjust the alpha depending on the position of your gradient, if you have a high cost function you will be interested to move quickly from that area, wether if you are near low cost function, reducing the alpha with every iterationn helps to proper the optimum cost value.
