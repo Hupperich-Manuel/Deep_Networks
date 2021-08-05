@@ -4,3 +4,15 @@ Unadjusted Deep Neural Network for Apple Stocks
 In order to properly explain my analysis, I will go through each of the files independently and then, join them together and see how they work harmoniously together for a test accuracy.
 First of all, we need to get the input layers. It has been historically prooved that aiming to get the real intrinsic value of a stock, one has to study its fundamentals. Therefore, I picked up several ratios which cover from the eranings ratios as the Price Earning Ratio to liquidity ratios, e.g.: the Current Ratio. 
 The outcome y_hat which I used to train the model where the stock prices from Apple. Accroding to an article published from [applyed science](file:///Users/usuario/Downloads/applsci-10-08142-v2.pdf) .
+
+
+## Datasets
+For this project, two types of data where required. On the one hand the time series data for AAPL stocks from the last 30 years and on the other hand the AAPL financial ratios.
+For the data cleaning we firstly had to access the information on the csv file, and then turn it into a monthly datetime index (since the index was the common column for both sets). The reason for a 'M' datetime is that ratios do only get published on a quarterly basis. Therefore, the prediction for an investment decision would be on a monthly timeframe. 
+
+After having merged the two sets, we had to get rid of the unnecessary information for this specific analysis, as were the adjusted closed price, the open, or the highest and lowest price of that month. The closed price of the stock is where we had to put our main focus, the Output Layer. However, according to several papers i read during this project I found out that making a precise estimation of the sotck price is not very reliable, nontheless, since using a logarithmic predicition method I had to convert the close column into a readable binomial column of values 0 or 1. To do so I chose to replace the positive returns with 1 and the negative with 0.
+
+Comming to the ratios. Stock ratios get very different values, one ranging from 0 to 1 and others, as "days of inventory outsatnding" could be from 0 to 365, as we are talking about days. So, to normalize the ratios I used mean and variance normalization. Those ratios are now ready to become the input layers.
+
+## Gradient Descent
+Since the dataset is not large enough to implement stochastic gradient descent (or minibatch GD), Adam optimization algorithm was chosen.
